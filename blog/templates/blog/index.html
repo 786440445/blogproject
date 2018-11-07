@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+
+{% block main %}
+    {% for post in post_list %}
+        <article class="post post-1">
+            <header class="entry-header">
+                <h1 class="entry-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </h1>
+                <div class="entry-meta">
+                    <span class="post-category"><a href="{% url 'blog:category' post.category_id %}">{{ post.category }}</a></span>
+                    <span class="post-date"><a href="{% url 'blog:archives' post.created_time.year post.created_time.month %}"><time class="entry-date"
+                                                              datetime="{{ post.created_time }}"> {{ post.created_time }}</time></a></span>
+                    <span class="post-author"><a href="#">{{ post.author }}</a></span>
+                    <span class="comments-link"><a href="#">{{ post.comment_set.count }} 评论</a></span>
+                    <span class="views-count"><a href="#">588 阅读</a></span>
+                </div>
+            </header>
+            <div class="entry-content clearfix">
+                <p>{{ post.excerpt }}</p>
+                <div class="read-more cl-effect-14">
+                    <a href="{{ post.get_absolute_url }} " class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <div class="no-post">暂时还没有发布的文章！</div>
+    {% endfor %}
+
+    {% if post_list.object_list and post_list.paginator.num_pages > 1 %}
+        <div class="pagination">
+            <ul>
+                {% if post_list.has_previous %}
+                    <a href="{% url 'blog:page' post_list.previous_page_number %}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}.
+                </span>
+
+                {% if post_list.has_next %}
+                    <a href="{% url 'blog:page' post_list.next_page_number %}">next</a>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock main %}
