@@ -73,7 +73,6 @@ def tag(request, pk):
 class RSSFeed(Feed):
     title = "RSS feed - blog"
     link = "rss/"
-    description = "RSS feed - blog posts"
 
     def items(self):
         return Post.objects.all().order_by("-created_time")
