@@ -1,0 +1,8 @@
+<uwsgi>    
+   <socket>127.0.0.1:8999</socket>
+   <chdir>/usr/local/nginx/blogproject/</chdir>         
+   <module>blogproject.wsgi</module>
+   <processes>4</processes>  
+   <daemonize>uwsgi.log</daemonize>
+   <pythonpath>/usr/local/bin/python3/lib/python3.7/site-packages</pythonpath>
+</uwsgi>
